@@ -48,9 +48,9 @@ class SqlConnection
       
       var connectCompleter = new Completer();
       
-      String json = json.encode({ "type": "open", "text": _connectionString });
+      String data = json.encode({ "type": "open", "text": _connectionString });
       
-      _SendCommand(json).then((result) 
+      _SendCommand(data).then((result) 
       {
          var res = _parseResult(result);
          if(res is _OkResult)
@@ -81,9 +81,9 @@ class SqlConnection
       
       Completer disconnectCompleter = new Completer();
       
-      String json = json.encode({ "type": "close", "text": "" });
+      String data = json.encode({ "type": "close", "text": "" });
       
-      _SendCommand(json).then((risp)
+      _SendCommand(data).then((risp)
       {
          var res = _parseResult(risp);
          
@@ -111,10 +111,10 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = json.encode({ "type": "table", "text": SQL });
+      String data = json.encode({ "type": "table", "text": SQL });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
 
@@ -140,10 +140,10 @@ class SqlConnection
       
       String params = json.encode(chg.toEncodable());
       
-      String json = json.encode({ "type": "postback", "text": params });
+      String data = json.encode({ "type": "postback", "text": params });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
 
@@ -170,10 +170,10 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = json.encode({ "type": "query", "text": SQL });
+      String data = json.encode({ "type": "query", "text": SQL });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
                if(res is _ErrorResult) compl.completeError(res.error);         
@@ -192,10 +192,10 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = json.encode({ "type": "querysingle", "text": SQL });
+      String data = json.encode({ "type": "querysingle", "text": SQL });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
           
@@ -219,10 +219,10 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = json.encode({ "type": "queryvalue", "text": SQL });
+      String data = json.encode({ "type": "queryvalue", "text": SQL });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
 
@@ -246,10 +246,10 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = json.encode({ "type": "execute", "text": SQL });
+      String data = json.encode({ "type": "execute", "text": SQL });
       
       Completer compl = new Completer(); 
-      _SendCommand(json).then((result)
+      _SendCommand(data).then((result)
       {
           var res = _parseResult(result);
           
@@ -316,9 +316,9 @@ class SqlConnection
    }
    
    /// translates generic json result into a Result type
-   dynamic _parseResult(String json)
+   dynamic _parseResult(String data)
    {
-      Map result = json.decode(json);           
+      Map result = json.decode(data);           
       
            if(result["type"]=="ok")       return new _OkResult("ok");      
       else if(result["type"]=="error")    return new _ErrorResult(result["error"]);      
