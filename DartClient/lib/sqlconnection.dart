@@ -43,12 +43,12 @@ class SqlConnection
       }
        
       //Establish the onData, and onDone callbacks
-      _socket.transform(UTF8.decoder)
+      _socket.transform(utf8.decoder)
              .listen(_receiveData, onError: _onError, onDone: _onDone);
       
       var connectCompleter = new Completer();
       
-      String json = JSON.encode({ "type": "open", "text": _connectionString });
+      String json = json.encode({ "type": "open", "text": _connectionString });
       
       _SendCommand(json).then((result) 
       {
@@ -81,7 +81,7 @@ class SqlConnection
       
       Completer disconnectCompleter = new Completer();
       
-      String json = JSON.encode({ "type": "close", "text": "" });
+      String json = json.encode({ "type": "close", "text": "" });
       
       _SendCommand(json).then((risp)
       {
@@ -111,7 +111,7 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = JSON.encode({ "type": "table", "text": SQL });
+      String json = json.encode({ "type": "table", "text": SQL });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -138,9 +138,9 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String params = JSON.encode(chg.toEncodable());
+      String params = json.encode(chg.toEncodable());
       
-      String json = JSON.encode({ "type": "postback", "text": params });
+      String json = json.encode({ "type": "postback", "text": params });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -170,7 +170,7 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = JSON.encode({ "type": "query", "text": SQL });
+      String json = json.encode({ "type": "query", "text": SQL });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -192,7 +192,7 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = JSON.encode({ "type": "querysingle", "text": SQL });
+      String json = json.encode({ "type": "querysingle", "text": SQL });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -219,7 +219,7 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = JSON.encode({ "type": "queryvalue", "text": SQL });
+      String json = json.encode({ "type": "queryvalue", "text": SQL });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -246,7 +246,7 @@ class SqlConnection
    {      
       if(!connected) throw "not connected";
       
-      String json = JSON.encode({ "type": "execute", "text": SQL });
+      String json = json.encode({ "type": "execute", "text": SQL });
       
       Completer compl = new Completer(); 
       _SendCommand(json).then((result)
@@ -318,7 +318,7 @@ class SqlConnection
    /// translates generic json result into a Result type
    dynamic _parseResult(String json)
    {
-      Map result = JSON.decode(json);           
+      Map result = json.decode(json);           
       
            if(result["type"]=="ok")       return new _OkResult("ok");      
       else if(result["type"]=="error")    return new _ErrorResult(result["error"]);      
